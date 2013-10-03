@@ -12,7 +12,7 @@ class UEA(object):
 
 class Particula(object):
     __slots__ = ('posicion', 'velocidad', 'mejor_posicion', 'calidad_mejor_posicion', 'calidad',
-        'calidad_EC', 'calidad_RC', 'calidad_S', 'calidad_NT', 'ueas_violadas', 'trimestres')
+        'calidad_EC', 'calidad_RC', 'calidad_SE', 'calidad_NT', 'ueas_violadas', 'trimestres')
     def __init__(self, dimension):
         self.posicion = [randint(1, 18) for x in xrange(dimension)]
         self.velocidad = [randint(-3, 3) for x in xrange(dimension)]
@@ -21,7 +21,7 @@ class Particula(object):
         self.calidad = 0
         self.calidad_EC = 0
         self.calidad_RC = 0
-        self.calidad_S = 0
+        self.calidad_SE = 0
         self.calidad_NT = 0
         self.ueas_violadas = []
         self.trimestres = {}
@@ -78,6 +78,14 @@ class Particula(object):
                     diferencia = uea_actual.creditos_requeridos - creditos_acumulados
                     self.calidad = self.calidad + diferencia
                     self.calidad_RC = self.calidad_RC + diferencia
+
+    def calcular_calidad_NT(self):
+        self.calidad_NT = 0
+        self.calidad = 0
+        penalizacion = 0
+        penalizacion = (max(self.posicion)-11)*2000
+        self.calidad = self.calidad + penalizacion
+        self.calidad_NT = self.calidad_NT + penalizacion
       
 
 def extender_seriacion(ueas):

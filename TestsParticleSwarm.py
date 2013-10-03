@@ -121,16 +121,83 @@ class TestUtilerias(unittest.TestCase):
 	def test_Particula_calcular_calidad_EC(self):
 		particula = Particula(len(self.ueas))
 		particula.calcular_creditos_por_trimestre(self.ueas)
+		self.assertEqual(particula.calidad,0)
+		self.assertEqual(particula.calidad_EC,0)
+		self.assertEqual(particula.calidad_RC,0)
+		self.assertEqual(particula.calidad_NT,0)
+		self.assertEqual(particula.calidad_SE,0)
 	 	particula.calcular_calidad_EC()
 	 	self.assertGreaterEqual(particula.calidad_EC, 0)
 	 	self.assertEqual(particula.calidad_EC, particula.calidad)
+		self.assertEqual(particula.calidad_RC,0)
+		self.assertEqual(particula.calidad_NT,0)
+		self.assertEqual(particula.calidad_SE,0)
+		particula.posicion = [1, 1, 2, 1, 7, 1, 2, 4, 2, 8, 2,
+							2, 3, 3, 11, 3, 4, 4, 4, 8, 8, 5,
+							5, 6, 5, 7, 6, 8, 5, 6, 5, 5, 9,
+							7, 7, 6, 6, 11, 10, 8, 8, 7, 7, 6,
+							9, 11, 9, 9, 10, 9, 2, 9, 8, 10,
+							10, 1, 1, 4, 8, 9, 10 , 10, 11, 11,
+							7, 11]
+		particula.calcular_creditos_por_trimestre(self.ueas)
+	 	particula.calcular_calidad_EC()
+	 	self.assertGreaterEqual(particula.calidad_EC, 0)
+	 	self.assertEqual(particula.calidad_EC, particula.calidad)
+	 	self.assertEqual(particula.calidad_EC, 0)	 	
 
 	def test_Particula_calcular_calidad_RC(self):
  		particula = Particula(len(self.ueas))
 		particula.calcular_creditos_por_trimestre(self.ueas)
+		self.assertEqual(particula.calidad,0)
+		self.assertEqual(particula.calidad_EC,0)
+		self.assertEqual(particula.calidad_RC,0)
+		self.assertEqual(particula.calidad_NT,0)
+		self.assertEqual(particula.calidad_SE,0)
 		particula.calcular_calidad_RC(self.ueas)
 		self.assertGreaterEqual(particula.calidad_RC, 0)
 	 	self.assertEqual(particula.calidad_RC, particula.calidad)
+		self.assertEqual(particula.calidad_EC,0)
+		self.assertEqual(particula.calidad_NT,0)
+		self.assertEqual(particula.calidad_SE,0)
+	 	particula.posicion = [1, 1, 2, 1, 7, 1, 2, 4, 2, 8, 2,
+							2, 3, 3, 11, 3, 4, 4, 4, 8, 8, 5,
+							5, 6, 5, 7, 6, 8, 5, 6, 5, 5, 9,
+							7, 7, 6, 6, 11, 10, 8, 8, 7, 7, 6,
+							9, 11, 9, 9, 10, 9, 2, 9, 8, 10,
+							10, 1, 1, 4, 8, 9, 10 , 10, 11, 11,
+							7, 11]
+		particula.calcular_creditos_por_trimestre(self.ueas)
+		particula.calcular_calidad_RC(self.ueas)
+		self.assertGreaterEqual(particula.calidad_RC, 0)
+	 	self.assertEqual(particula.calidad_RC, particula.calidad)
+	 	self.assertEqual(particula.calidad_RC, 0)
+
+	def test_Particula_calcular_calidad_NT(self):
+	 	particula = Particula(len(self.ueas))
+		particula.calcular_creditos_por_trimestre(self.ueas)
+		self.assertEqual(particula.calidad,0)
+		self.assertEqual(particula.calidad_EC,0)
+		self.assertEqual(particula.calidad_RC,0)
+		self.assertEqual(particula.calidad_NT,0)
+		self.assertEqual(particula.calidad_SE,0)
+		particula.calcular_calidad_NT()
+		self.assertGreaterEqual(particula.calidad_NT, 0)
+	 	self.assertEqual(particula.calidad_NT, particula.calidad)
+		self.assertEqual(particula.calidad_EC,0)
+		self.assertEqual(particula.calidad_RC,0)
+		self.assertEqual(particula.calidad_SE,0)
+		particula.posicion = [1, 1, 2, 1, 7, 1, 2, 4, 2, 8, 2,
+							2, 3, 3, 11, 3, 4, 4, 4, 8, 8, 5,
+							5, 6, 5, 7, 6, 8, 5, 6, 5, 5, 9,
+							7, 7, 6, 6, 11, 10, 8, 8, 7, 7, 6,
+							9, 11, 9, 9, 10, 9, 2, 9, 8, 10,
+							10, 1, 1, 4, 8, 9, 10 , 10, 11, 11,
+							7, 11]
+		particula.calcular_creditos_por_trimestre(self.ueas)
+		particula.calcular_calidad_NT()
+		self.assertGreaterEqual(particula.calidad_NT, 0)
+	 	self.assertEqual(particula.calidad_NT, particula.calidad)
+	 	self.assertEqual(particula.calidad_NT, 0)
 
 
 
