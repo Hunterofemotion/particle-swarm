@@ -86,6 +86,30 @@ class Particula(object):
         penalizacion = (max(self.posicion)-11)*2000
         self.calidad = self.calidad + penalizacion
         self.calidad_NT = self.calidad_NT + penalizacion
+
+    def calcular_calidad_SE(self, ueas):
+        self.calidad_SE = 0
+        self.calidad = 0
+        for x in xrange(len(self.posicion)):
+            uea_actual = ueas[x+1]
+            if uea_actual.ueas_requeridas != [0]:
+                ueas_relacionadas = [0, []]
+                for clave_uea_seriada in uea_actual.ueas_requeridas:
+                    if self.posicion[clave_uea_seriada-1] >= self.posicion[uea_actual.clave-1]:
+                        #calidad = calidad + 1
+                        #calidad_S = calidad_S + 1
+                        if uea_actual.clave not in self.ueas_violadas:
+                            #ueas_violadas.append(uea_actual.clave)
+                            ueas_relacionadas[0] = uea_actual.clave
+                            self.calidad = self.calidad + 1
+                            self.calidad_SE = self.calidad_SE + 1
+                        ueas_relacionadas[1].append(clave_uea_seriada)
+                        #ueas_violadas.append(int(clave_uea_seriada))
+                if ueas_relacionadas[0] != 0:
+                    self.ueas_violadas.append(ueas_relacionadas)
+                    #calidad = calidad + 1
+                    #calidad_S = calidad_S + 1
+
       
 
 def extender_seriacion(ueas):
