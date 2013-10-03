@@ -63,6 +63,21 @@ class Particula(object):
                 if self.trimestres[h+1] > 0:
                     self.calidad = self.calidad + 60
                     self.calidad_EC = self.calidad_EC + 60
+
+    def calcular_calidad_RC(self, ueas):
+        self.calidad_RC = 0
+        self.calidad = 0
+        for x in xrange(len(self.posicion)):
+            uea_actual = ueas[x+1]
+            if uea_actual.creditos_requeridos != 0:
+                creditos_acumulados = 0
+                for m in xrange(1,self.posicion[x-1]):
+                    creditos_acumulados = creditos_acumulados + self.trimestres[m]
+
+                if creditos_acumulados < uea_actual.creditos_requeridos:
+                    diferencia = uea_actual.creditos_requeridos - creditos_acumulados
+                    self.calidad = self.calidad + diferencia
+                    self.calidad_RC = self.calidad_RC + diferencia
       
 
 def extender_seriacion(ueas):

@@ -125,6 +125,16 @@ class TestUtilerias(unittest.TestCase):
 	 	self.assertGreaterEqual(particula.calidad_EC, 0)
 	 	self.assertEqual(particula.calidad_EC, particula.calidad)
 
+	def test_Particula_calcular_calidad_RC(self):
+ 		particula = Particula(len(self.ueas))
+		particula.calcular_creditos_por_trimestre(self.ueas)
+		particula.calcular_calidad_RC(self.ueas)
+		self.assertGreaterEqual(particula.calidad_RC, 0)
+	 	self.assertEqual(particula.calidad_RC, particula.calidad)
+
+
+
+
 
 
 
