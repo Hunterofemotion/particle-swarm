@@ -161,6 +161,32 @@ class TestUtilerias(unittest.TestCase):
 		self.assertEqual(particula.calidad_NT,0)
 		self.assertEqual(particula.calidad_SE,0)
 
+		#Prueba con una solución que no incluye al 5 trimestre.
+		particula = Particula(len(self.ueas))
+	 	particula.posicion = [1, 1, 2, 1, 7, 1, 2, 4, 2, 8, 2,
+							2, 3, 3, 11, 3, 4, 4, 4, 8, 8, 1,
+							1, 6, 1, 7, 6, 8, 1, 6, 1, 1, 9,
+							7, 7, 6, 6, 11, 10, 8, 8, 7, 7, 6,
+							9, 11, 9, 9, 10, 9, 2, 9, 8, 10,
+							10, 1, 1, 4, 8, 9, 10 , 10, 11, 11,
+							7, 11]
+		particula.calcular_creditos_por_trimestre(self.ueas)
+		self.assertEqual(particula.trimestres.get(5, 0), 0)
+		self.assertNotEqual(particula.trimestres.get(6, 0), 0)
+
+		#Prueba con una solución que no incluye al 5 y 6 trimestre.
+		particula = Particula(len(self.ueas))
+	 	particula.posicion = [1, 1, 2, 1, 7, 1, 2, 4, 2, 8, 2,
+							2, 3, 3, 11, 3, 4, 4, 4, 8, 8, 1,
+							1, 7, 1, 7, 7, 8, 1, 7, 1, 1, 9,
+							7, 7, 7, 7, 11, 10, 8, 8, 7, 7, 7,
+							9, 11, 9, 9, 10, 9, 2, 9, 8, 10,
+							10, 1, 1, 4, 8, 9, 10 , 10, 11, 11,
+							7, 11]
+		particula.calcular_creditos_por_trimestre(self.ueas)
+		self.assertEqual(particula.trimestres.get(5, 0), 0)
+		self.assertEqual(particula.trimestres.get(6, 0), 0)
+
 		#Prueba con una solución óptima.
 		particula = Particula(len(self.ueas))
 	 	particula.posicion = [1, 1, 2, 1, 7, 1, 2, 4, 2, 8, 2,
@@ -256,6 +282,13 @@ class TestUtilerias(unittest.TestCase):
 		suma_de_calidades += particula.calidad_SE
 		self.assertEqual(suma_de_calidades, particula.calidad)
 
+	def test_Particula_actualizar_velocidad(self):
+		extender_seriacion(self.ueas)
+		particula = Particula(len(self.ueas))
+		particula.calcular_creditos_por_trimestre(self.ueas)
+		self.assertEqual(particula.calidad, 0)
+		particula.calcular_calidad(self.ueas)
+
 class TestParticleSwarm(unittest.TestCase):
 
 	def setUp(self):
@@ -293,6 +326,7 @@ class TestParticleSwarm(unittest.TestCase):
 		self.assertGreaterEqual(pso.P_global.posicion[11-1], 2)
 		self.assertGreaterEqual(pso.P_global.posicion[14-1], 3)
 		self.assertGreaterEqual(pso.P_global.posicion[62-1], 1)
+		#TODO Agregar más casos de prueba
 
 
 

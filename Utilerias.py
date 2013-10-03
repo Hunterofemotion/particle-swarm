@@ -26,25 +26,28 @@ class Particula(object):
         self.ueas_violadas = []
         self.trimestres = {}
 
-    def actualizar_velocidad():
+    def actualizar_velocidad(self):
         pass
 
-    def actualizar_posicion():
+    def actualizar_posicion(self):
         pass
 
     def calcular_creditos_por_trimestre(self, ueas):
-        for i in xrange(1, 19):
-            self.trimestres[i] = 0
         for x in xrange(len(self.posicion)):
             uea_actual = ueas[x+1]
-            self.trimestres[self.posicion[x]] = self.trimestres[self.posicion[x]] + uea_actual.creditos
+            self.trimestres[self.posicion[x]] = self.trimestres.get(self.posicion[x], 0) + uea_actual.creditos
+            # self.trimestres[self.posicion[x]] = self.trimestres[self.posicion[x]] + uea_actual.creditos
+        
+        # for x in xrange(len(self.posicion)):
+        #     uea_actual = ueas[x+1]
+        #     self.trimestres[self.posicion[x]] = self.trimestres[self.posicion[x]] + uea_actual.creditos
 
     def calcular_calidad_EC(self):
-        if self.trimestres[1] == 0:
+        if self.trimestres.get(1, 0) == 0:
             self.calidad = self.calidad + 46
             self.calidad_EC = self.calidad_EC + 46
         else:
-            if self.trimestres[1] > 46:
+            if self.trimestres.get(1, 0) > 46:
                 diferencia = self.trimestres[1] - 46
                 self.calidad = self.calidad + diferencia
                 self.calidad_EC = self.calidad_EC + diferencia
@@ -53,7 +56,7 @@ class Particula(object):
             #     self.calidad = self.calidad + diferencia
             #     self.calidad_EC = self.calidad_EC + diferencia
         for h in xrange(2, len(self.trimestres)+1):
-            if self.trimestres[h] > 60:
+            if self.trimestres.get(h, 0) > 60:
                 diferencia = self.trimestres[h] - 60
                 self.calidad = self.calidad + diferencia
                 self.calidad_EC = self.calidad_EC + diferencia
@@ -63,8 +66,8 @@ class Particula(object):
             #     self.calidad_EC = self.calidad_EC + diferencia
 
         for h in xrange(2,len(self.trimestres)):
-            if self.trimestres[h] == 0:
-                if self.trimestres[h+1] > 0:
+            if self.trimestres.get(h, 0) == 0:
+                if self.trimestres.get(h+1, 0) > 0:
                     self.calidad = self.calidad + 60
                     self.calidad_EC = self.calidad_EC + 60
 
@@ -74,7 +77,7 @@ class Particula(object):
             if uea_actual.creditos_requeridos != 0:
                 creditos_acumulados = 0
                 for m in xrange(1,self.posicion[x-1]):
-                    creditos_acumulados = creditos_acumulados + self.trimestres[m]
+                    creditos_acumulados = creditos_acumulados + self.trimestres.get(m, 0)
 
                 if creditos_acumulados < uea_actual.creditos_requeridos:
                     diferencia = uea_actual.creditos_requeridos - creditos_acumulados
