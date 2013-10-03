@@ -26,6 +26,12 @@ class Particula(object):
         self.ueas_violadas = []
         self.trimestres = {}
 
+    def actualizar_velocidad():
+        pass
+
+    def actualizar_posicion():
+        pass
+
     def calcular_creditos_por_trimestre(self, ueas):
         for i in xrange(1, 19):
             self.trimestres[i] = 0
@@ -34,8 +40,6 @@ class Particula(object):
             self.trimestres[self.posicion[x]] = self.trimestres[self.posicion[x]] + uea_actual.creditos
 
     def calcular_calidad_EC(self):
-        self.calidad_EC = 0
-        self.calidad = 0
         if self.trimestres[1] == 0:
             self.calidad = self.calidad + 46
             self.calidad_EC = self.calidad_EC + 46
@@ -65,8 +69,6 @@ class Particula(object):
                     self.calidad_EC = self.calidad_EC + 60
 
     def calcular_calidad_RC(self, ueas):
-        self.calidad_RC = 0
-        self.calidad = 0
         for x in xrange(len(self.posicion)):
             uea_actual = ueas[x+1]
             if uea_actual.creditos_requeridos != 0:
@@ -80,16 +82,12 @@ class Particula(object):
                     self.calidad_RC = self.calidad_RC + diferencia
 
     def calcular_calidad_NT(self):
-        self.calidad_NT = 0
-        self.calidad = 0
         penalizacion = 0
         penalizacion = (max(self.posicion)-11)*2000
         self.calidad = self.calidad + penalizacion
         self.calidad_NT = self.calidad_NT + penalizacion
 
     def calcular_calidad_SE(self, ueas):
-        self.calidad_SE = 0
-        self.calidad = 0
         for x in xrange(len(self.posicion)):
             uea_actual = ueas[x+1]
             if uea_actual.ueas_requeridas != [0]:
@@ -110,6 +108,16 @@ class Particula(object):
                     #calidad = calidad + 1
                     #calidad_S = calidad_S + 1
 
+    def calcular_calidad(self, ueas):
+        self.calidad = 0
+        self.calidad_EC = 0
+        self.calidad_RC = 0
+        self.calidad_NT = 0
+        self.calidad_SE = 0
+        self.calcular_calidad_EC()
+        self.calcular_calidad_RC(ueas)
+        self.calcular_calidad_NT()
+        self.calcular_calidad_SE(ueas)
       
 
 def extender_seriacion(ueas):

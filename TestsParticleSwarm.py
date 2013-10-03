@@ -85,14 +85,9 @@ class TestUtilerias(unittest.TestCase):
 		#TODO Agregar mas casos de prueba
 
 	def test_Particula(self):
+		extender_seriacion(self.ueas)
 		particula = Particula(len(self.ueas))
-		# particula.posicion = posicion = [1, 1, 2, 1, 7, 1, 2, 4, 2, 8, 2,
-		# 								2, 3, 3, 11, 3, 4, 4, 4, 8, 8, 5,
-		# 								5, 6, 5, 7, 6, 8, 5, 6, 5, 5, 9,
-		# 								7, 7, 6, 6, 11, 10, 8, 8, 7, 7, 6,
-		# 								9, 11, 9, 9, 10, 9, 2, 9, 8, 10,
-		# 								10, 1, 1, 4, 8, 9, 10 , 10, 11, 11,
-		# 								7, 11]
+
 		self.assertEqual(len(particula.posicion), len(self.ueas))
 		self.assertEqual(len(particula.velocidad), len(self.ueas))
 		for x in particula.posicion:
@@ -101,6 +96,7 @@ class TestUtilerias(unittest.TestCase):
 			self.assertTrue(-3 <= x <= 3)
 
 	def test_Particula_calcular_creditos_por_trimestre(self):
+		extender_seriacion(self.ueas)
 		particula = Particula(len(self.ueas))
 		particula.calcular_creditos_por_trimestre(self.ueas)
 		creditos_totales = 0
@@ -119,6 +115,7 @@ class TestUtilerias(unittest.TestCase):
 		
 
 	def test_Particula_calcular_calidad_EC(self):
+		extender_seriacion(self.ueas)
 		particula = Particula(len(self.ueas))
 		particula.calcular_creditos_por_trimestre(self.ueas)
 		self.assertEqual(particula.calidad,0)
@@ -132,11 +129,7 @@ class TestUtilerias(unittest.TestCase):
 		self.assertEqual(particula.calidad_RC,0)
 		self.assertEqual(particula.calidad_NT,0)
 		self.assertEqual(particula.calidad_SE,0)
-		#Verificar que la calidad no se acumula cada vez que se
-		#calcula su calidad.
-		calidad_previa = particula.calidad
-		particula.calcular_calidad_EC()
-		self.assertEqual(particula.calidad, calidad_previa)
+
 		#Prueba con una solución óptima.
 		particula = Particula(len(self.ueas))
 		particula.posicion = [1, 1, 2, 1, 7, 1, 2, 4, 2, 8, 2,
@@ -153,6 +146,7 @@ class TestUtilerias(unittest.TestCase):
 	 	self.assertEqual(particula.calidad_EC, 0)	 	
 
 	def test_Particula_calcular_calidad_RC(self):
+		extender_seriacion(self.ueas)
  		particula = Particula(len(self.ueas))
 		particula.calcular_creditos_por_trimestre(self.ueas)
 		self.assertEqual(particula.calidad,0)
@@ -166,11 +160,7 @@ class TestUtilerias(unittest.TestCase):
 		self.assertEqual(particula.calidad_EC,0)
 		self.assertEqual(particula.calidad_NT,0)
 		self.assertEqual(particula.calidad_SE,0)
-		#Verificar que la calidad no se acumula cada vez que se
-		#calcula su calidad.
-		calidad_previa = particula.calidad
-		particula.calcular_calidad_RC(self.ueas)
-		self.assertEqual(particula.calidad, calidad_previa)
+
 		#Prueba con una solución óptima.
 		particula = Particula(len(self.ueas))
 	 	particula.posicion = [1, 1, 2, 1, 7, 1, 2, 4, 2, 8, 2,
@@ -187,6 +177,7 @@ class TestUtilerias(unittest.TestCase):
 	 	self.assertEqual(particula.calidad_RC, 0)
 
 	def test_Particula_calcular_calidad_NT(self):
+		extender_seriacion(self.ueas)
 	 	particula = Particula(len(self.ueas))
 		particula.calcular_creditos_por_trimestre(self.ueas)
 		self.assertEqual(particula.calidad,0)
@@ -200,11 +191,7 @@ class TestUtilerias(unittest.TestCase):
 		self.assertEqual(particula.calidad_EC,0)
 		self.assertEqual(particula.calidad_RC,0)
 		self.assertEqual(particula.calidad_SE,0)
-		#Verificar que la calidad no se acumula cada vez que se
-		#calcula su calidad.
-		calidad_previa = particula.calidad
-		particula.calcular_calidad_NT()
-		self.assertEqual(particula.calidad, calidad_previa)
+
 		#Prueba con una solución óptima.
 		particula = Particula(len(self.ueas))
 		particula.posicion = [1, 1, 2, 1, 7, 1, 2, 4, 2, 8, 2,
@@ -221,6 +208,7 @@ class TestUtilerias(unittest.TestCase):
 	 	self.assertEqual(particula.calidad_NT, 0)
 
 	def test_Particula_calcular_calidad_SE(self):
+		extender_seriacion(self.ueas)
 		particula = Particula(len(self.ueas))
 		particula.calcular_creditos_por_trimestre(self.ueas)
 		self.assertEqual(particula.calidad,0)
@@ -233,11 +221,7 @@ class TestUtilerias(unittest.TestCase):
 	 	self.assertEqual(particula.calidad_SE, particula.calidad)
 		self.assertEqual(particula.calidad_EC,0)
 		self.assertEqual(particula.calidad_RC,0)
-		#Verificar que la calidad no se acumula cada vez que se
-		#calcula su calidad.
-		calidad_previa = particula.calidad
-		particula.calcular_calidad_SE(self.ueas)
-		self.assertEqual(particula.calidad, calidad_previa)
+		
 		#Prueba con una solución óptima.
 		particula = Particula(len(self.ueas))
 		particula.posicion = [1, 1, 2, 1, 7, 1, 2, 4, 2, 8, 2,
@@ -252,9 +236,63 @@ class TestUtilerias(unittest.TestCase):
 		self.assertGreaterEqual(particula.calidad_SE, 0)
 	 	self.assertEqual(particula.calidad_SE, particula.calidad)
 	 	self.assertEqual(particula.calidad_SE, 0)
+	 	self.assertEqual(particula.ueas_violadas, [])
 
+	def test_Particular_calcular_calidad(self):
+		extender_seriacion(self.ueas)
+		particula = Particula(len(self.ueas))
+		particula.calcular_creditos_por_trimestre(self.ueas)
+		self.assertEqual(particula.calidad, 0)
+		particula.calcular_calidad(self.ueas)
+		self.assertGreaterEqual(particula.calidad, 0)
+		self.assertLessEqual(particula.calidad_EC, particula.calidad)
+		self.assertLessEqual(particula.calidad_RC, particula.calidad)
+		self.assertLessEqual(particula.calidad_NT, particula.calidad)
+		self.assertLessEqual(particula.calidad_SE, particula.calidad)
+		suma_de_calidades = 0	
+		suma_de_calidades += particula.calidad_EC
+		suma_de_calidades += particula.calidad_RC
+		suma_de_calidades += particula.calidad_NT
+		suma_de_calidades += particula.calidad_SE
+		self.assertEqual(suma_de_calidades, particula.calidad)
 
+class TestParticleSwarm(unittest.TestCase):
 
+	def setUp(self):
+		self.ueas = cargar_datos()
+		extender_seriacion(self.ueas)
+
+	def testBar(self):
+		self.assertTrue(True)
+
+	def test_PSO(self):
+		limites_inferiores = calcular_limites_inferiores(self.ueas)
+		numero_de_particulas = 50
+		pso = PSO(self.ueas, numero_de_particulas, limites_inferiores)
+		pso.inicializar_particulas()
+		self.assertEqual(len(pso.particulas), numero_de_particulas)
+		#Verificar que las partículas cumplan los límites inferiores
+		for particula in pso.particulas:
+			self.assertGreaterEqual(particula.posicion[1-1], 1)
+			self.assertGreaterEqual(particula.posicion[4-1], 1)
+			self.assertGreaterEqual(particula.posicion[1-1], 1)
+			self.assertGreaterEqual(particula.posicion[7-1], 2)
+			self.assertGreaterEqual(particula.posicion[8-1], 3)
+			self.assertGreaterEqual(particula.posicion[10-1], 3)
+			self.assertGreaterEqual(particula.posicion[11-1], 2)
+			self.assertGreaterEqual(particula.posicion[14-1], 3)
+			self.assertGreaterEqual(particula.posicion[62-1], 1)
+		#Verificar que la mejor partícula del enjambre (global),
+		#cumpla los límites inferiores
+		self.assertGreaterEqual(pso.P_global.posicion[1-1], 1)
+		self.assertGreaterEqual(pso.P_global.posicion[4-1], 1)
+		self.assertGreaterEqual(pso.P_global.posicion[1-1], 1)
+		self.assertGreaterEqual(pso.P_global.posicion[7-1], 2)
+		self.assertGreaterEqual(pso.P_global.posicion[8-1], 3)
+		self.assertGreaterEqual(pso.P_global.posicion[10-1], 3)
+		self.assertGreaterEqual(pso.P_global.posicion[11-1], 2)
+		self.assertGreaterEqual(pso.P_global.posicion[14-1], 3)
+		self.assertGreaterEqual(pso.P_global.posicion[62-1], 1)
 
 
 
