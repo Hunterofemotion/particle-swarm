@@ -137,7 +137,7 @@ class TestUtilerias(unittest.TestCase):
 							5, 6, 5, 7, 6, 8, 5, 6, 5, 5, 9,
 							7, 7, 6, 6, 11, 10, 8, 8, 7, 7, 6,
 							9, 11, 9, 9, 10, 9, 2, 9, 8, 10,
-							10, 1, 1, 4, 8, 9, 10 , 10, 11, 11,
+							10, 1, 1, 4, 8, 9, 10, 10, 11, 11,
 							7, 11]
 		particula.calcular_creditos_por_trimestre(self.ueas)
 	 	particula.calcular_calidad_EC()
@@ -168,7 +168,7 @@ class TestUtilerias(unittest.TestCase):
 							1, 6, 1, 7, 6, 8, 1, 6, 1, 1, 9,
 							7, 7, 6, 6, 11, 10, 8, 8, 7, 7, 6,
 							9, 11, 9, 9, 10, 9, 2, 9, 8, 10,
-							10, 1, 1, 4, 8, 9, 10 , 10, 11, 11,
+							10, 1, 1, 4, 8, 9, 10, 10, 11, 11,
 							7, 11]
 		particula.calcular_creditos_por_trimestre(self.ueas)
 		self.assertEqual(particula.trimestres.get(5, 0), 0)
@@ -181,11 +181,28 @@ class TestUtilerias(unittest.TestCase):
 							1, 7, 1, 7, 7, 8, 1, 7, 1, 1, 9,
 							7, 7, 7, 7, 11, 10, 8, 8, 7, 7, 7,
 							9, 11, 9, 9, 10, 9, 2, 9, 8, 10,
-							10, 1, 1, 4, 8, 9, 10 , 10, 11, 11,
+							10, 1, 1, 4, 8, 9, 10, 10, 11, 11,
 							7, 11]
 		particula.calcular_creditos_por_trimestre(self.ueas)
 		self.assertEqual(particula.trimestres.get(5, 0), 0)
 		self.assertEqual(particula.trimestres.get(6, 0), 0)
+
+		#Prueba con una solución que solo incluye al trimestre 2.
+		particula = Particula(len(self.ueas))
+	 	particula.posicion = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+							2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+							2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+							2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+							2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+							2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+							2, 2]
+		particula.calcular_creditos_por_trimestre(self.ueas)
+		self.assertEqual(particula.trimestres.get(1, 0), 0)
+		self.assertEqual(particula.trimestres.get(3, 0), 0)
+		self.assertEqual(particula.trimestres.get(4, 0), 0)
+		self.assertEqual(particula.trimestres.get(20, 0), 0)
+		self.assertEqual(particula.trimestres.get(6, 0), 0)
+		self.assertNotEqual(particula.trimestres.get(2, 0), 0)
 
 		#Prueba con una solución óptima.
 		particula = Particula(len(self.ueas))
@@ -194,7 +211,7 @@ class TestUtilerias(unittest.TestCase):
 							5, 6, 5, 7, 6, 8, 5, 6, 5, 5, 9,
 							7, 7, 6, 6, 11, 10, 8, 8, 7, 7, 6,
 							9, 11, 9, 9, 10, 9, 2, 9, 8, 10,
-							10, 1, 1, 4, 8, 9, 10 , 10, 11, 11,
+							10, 1, 1, 4, 8, 9, 10, 10, 11, 11,
 							7, 11]
 		particula.calcular_creditos_por_trimestre(self.ueas)
 		particula.calcular_calidad_RC(self.ueas)
@@ -225,7 +242,7 @@ class TestUtilerias(unittest.TestCase):
 							5, 6, 5, 7, 6, 8, 5, 6, 5, 5, 9,
 							7, 7, 6, 6, 11, 10, 8, 8, 7, 7, 6,
 							9, 11, 9, 9, 10, 9, 2, 9, 8, 10,
-							10, 1, 1, 4, 8, 9, 10 , 10, 11, 11,
+							10, 1, 1, 4, 8, 9, 10, 10, 11, 11,
 							7, 11]
 		particula.calcular_creditos_por_trimestre(self.ueas)
 		particula.calcular_calidad_NT()
@@ -255,7 +272,7 @@ class TestUtilerias(unittest.TestCase):
 							5, 6, 5, 7, 6, 8, 5, 6, 5, 5, 9,
 							7, 7, 6, 6, 11, 10, 8, 8, 7, 7, 6,
 							9, 11, 9, 9, 10, 9, 2, 9, 8, 10,
-							10, 1, 1, 4, 8, 9, 10 , 10, 11, 11,
+							10, 1, 1, 4, 8, 9, 10, 10, 11, 11,
 							7, 11]
 		particula.calcular_creditos_por_trimestre(self.ueas)
 		particula.calcular_calidad_SE(self.ueas)
@@ -288,6 +305,72 @@ class TestUtilerias(unittest.TestCase):
 		particula.calcular_creditos_por_trimestre(self.ueas)
 		self.assertEqual(particula.calidad, 0)
 		particula.calcular_calidad(self.ueas)
+		P_global = Particula(len(self.ueas))
+		particula.actualizar_velocidad(P_global, self.ueas)
+
+		particula = Particula(len(self.ueas))
+		particula.velocidad = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+							1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+							1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+							1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+							1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+							1, 1]
+
+		particula.posicion = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+							5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+							5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+							5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+							5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+							5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+							5, 5]
+
+		particula.mejor_posicion = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+							10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+							10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+							10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+							10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+							10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+							10, 10]
+
+		P_global.posicion = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+							10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+							10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+							10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+							10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+							10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+							10, 10]
+
+		particula.calcular_creditos_por_trimestre(self.ueas)
+		self.assertEqual(particula.calidad, 0)
+		particula.calcular_calidad(self.ueas)
+		particula.actualizar_velocidad(P_global, self.ueas)
+		particula.actualizar_posicion(self.ueas)
+
+	def test_Particula_actualizar_posicion(self):
+		extender_seriacion(self.ueas)
+		particula = Particula(len(self.ueas))
+		particula.calcular_creditos_por_trimestre(self.ueas)
+		self.assertEqual(particula.calidad, 0)
+		particula.calcular_calidad(self.ueas)
+		P_global = Particula(len(self.ueas))
+		posicion_previa = particula.posicion[:]
+
+		particula.actualizar_velocidad(P_global, self.ueas)
+		self.assertEqual(particula.posicion,posicion_previa)
+		particula.actualizar_posicion(self.ueas)
+		for x in xrange(len(self.ueas)):
+			self.assertGreaterEqual(particula.velocidad[x], -3)
+			self.assertLessEqual(particula.velocidad[x], 3)
+
+			self.assertGreaterEqual(particula.posicion[x], 1)
+			self.assertLessEqual(particula.posicion[x], 18)
+			if posicion_previa[x] <= 15 and posicion_previa[x] >= 4:
+				self.assertEqual(posicion_previa[x] + particula.velocidad[x], particula.posicion[x])
+
+	def test_Particula_intercambiar_ueas(self):
+		pass
+
 
 class TestParticleSwarm(unittest.TestCase):
 
